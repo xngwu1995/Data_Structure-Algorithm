@@ -10,14 +10,19 @@ class MyLinkedList:
 
     def __init__(self):
         self.head = None
-    
+        self.length = 0
+
     def get(self, location):
+        if location >= self.length:
+            return "Incorrect length"
         cur = self.head
         for _ in range(location):
             cur = cur.next
         return cur
 
     def add(self, location, val):
+        if location > self.length:
+            return "Incorrect length"
         new_node = ListNode(val)
         if location == START:
             prev = self.head
@@ -27,14 +32,20 @@ class MyLinkedList:
             prev = self.get(location - 1)
             new_node.next = prev.next
             prev.next = new_node
+        self.length += 1
     
     def set_node(self, location, val):
+        if location >= self.length:
+            return "Incorrect length"
         cur = self.get(location)
         cur.val = val
     
     def remove(self, location):
+        if location >= self.length:
+            return "Incorrect length"
         prev = self.get(location - 1)
         prev.next = prev.next.next
+        self.length -= 1
     
     def traverse(self):
         cur = self.head
@@ -49,6 +60,8 @@ class MyLinkedList:
 
 if __name__ == '__main__':
     ll = MyLinkedList()
+    linked_list = ll.traverse()
+    assert linked_list == ""
     ll.add(0, 1)
     ll.add(1, 2)
     ll.add(2, 5)
@@ -62,3 +75,7 @@ if __name__ == '__main__':
     ll.remove(3)
     linked_list = ll.traverse()
     assert linked_list == "1->100->5"
+    assert ll.remove(3) == "Incorrect length"
+    assert ll.add(4, 1000) == "Incorrect length"
+    assert ll.set_node(3, 13) == "Incorrect length"
+    assert ll.get(3) == "Incorrect length"
