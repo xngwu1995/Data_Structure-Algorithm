@@ -15,7 +15,7 @@ class MyLinkedList:
         cur = self.head
         for _ in range(location):
             cur = cur.next
-        return cur.val
+        return cur
 
     def add(self, location, val):
         new_node = ListNode(val)
@@ -24,22 +24,16 @@ class MyLinkedList:
             self.head = new_node
             self.head.next = prev
         elif location > START:
-            prev = self.head
-            for _ in range(location - 1):
-                prev = prev.next
+            prev = self.get(location - 1)
             new_node.next = prev.next
             prev.next = new_node
     
     def set_node(self, location, val):
-        cur = self.head
-        for _ in range(location):
-            cur = cur.next
+        cur = self.get(location)
         cur.val = val
     
     def remove(self, location):
-        prev = self.head
-        for _ in range(location - 1):
-            prev = prev.next
+        prev = self.get(location - 1)
         prev.next = prev.next.next
     
     def traverse(self):
@@ -64,7 +58,7 @@ if __name__ == '__main__':
     ll.set_node(1, 100)
     linked_list = ll.traverse()
     assert linked_list == "1->100->5->6"
-    assert ll.get(1) == 100
+    assert ll.get(1).val == 100
     ll.remove(3)
     linked_list = ll.traverse()
     assert linked_list == "1->100->5"
