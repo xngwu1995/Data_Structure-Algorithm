@@ -84,3 +84,5 @@ class TestLinkedList(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+  {$project: {name: "$name",KRC: {$multiply: ["$publication_info.keywords.score","$publication_info.numCitations"]}}},{$group: {_id: "$name",total_KRC: { $sum: "$KRC" }}},{$sort: {total_KRC: -1}},{$limit: 10},{$project: {_id: 0,faculty_name: "$_id",KRC: "$total_KRC"}}
